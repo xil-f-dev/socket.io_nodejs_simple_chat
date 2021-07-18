@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Socket.IO Chat Example</title>
+		<link rel="stylesheet" href="main.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<!-- Login popup -->
+		<div class="login">
+			<div class="popup">
+				<h3>Welcome !</h3>
+				<p>Please login to use the chat</p>
+				<form>
+					<input
+						type="text"
+						placeholder="Your username here ..."
+						class="user_input"
+					/>
+					<input type="submit" value="Continue" class="user_submit" />
+				</form>
+			</div>
+		</div>
+
+		<!-- Channels -->
+		<div class="channels_container ns">
+			<nav class="channels"></nav>
+			<div class="me"></div>
+		</div>
+
+		<!-- Chat ( tabs ) -->
+		<section class="right">
+			<main>
+				<div class="messages_container">
+					<div
+						data-channelid="ch1"
+						class="tab"
+						style="background-color: #36393f"
+					></div>
+					<div
+						data-channelid="ch2"
+						class="tab"
+						style="background-color: #36393f"
+					></div>
+				</div>
+				<form class="message_form">
+					<input type="text" class="message_input" autofocus />
+					<input
+						type="submit"
+						value="Envoyer"
+						class="message_submit"
+					/>
+				</form>
+			</main>
+			<!-- Connected users -->
+			<div class="connected_users ns"></div>
+		</section>
+
+		<!-- Scripts -->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/main.js"></script>
+	</body>
+</html>
