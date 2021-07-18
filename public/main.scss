@@ -316,6 +316,8 @@ main form {
 		margin-bottom: 10px;
 	}
 }
+
+// CSS media queries
 @media screen and (max-width: 650px) {
 	section.right {
 		flex-direction: column-reverse;
