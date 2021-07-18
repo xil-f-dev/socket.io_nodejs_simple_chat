@@ -12,6 +12,7 @@ body {
   display: flex;
   flex-direction: row;
   height: 100vh;
+  max-height: -webkit-fill-available;
 }
 
 .ns {
@@ -306,7 +307,7 @@ main form .message_submit {
   margin-bottom: 10px;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-device-width: 650px), screen and (max-width: 650px) {
   section.right {
     flex-direction: column-reverse;
   }
@@ -316,6 +317,7 @@ main form .message_submit {
     height: 50px;
     transition: max-width 0.2s ease;
     padding: 10px;
+    display: flex;
   }
   .connected_users .user {
     height: 30px;
@@ -330,7 +332,7 @@ main form .message_submit {
     margin-right: 10px;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-device-width: 500px), screen and (max-width: 500px) {
   body {
     flex-direction: column-reverse;
   }
@@ -391,6 +393,7 @@ main form .message_submit {
     flex: 1;
     display: flex;
     padding: 5px;
+    overflow-x: hidden;
   }
   .channels .channel {
     height: 50px;
@@ -404,6 +407,67 @@ main form .message_submit {
   .channels .channel.active {
     border-left: 0;
     background-color: rgba(255, 255, 255, 0.3);
+  }
+}
+@media screen and (max-device-width: 650px) {
+  .connected_users {
+    height: 100px;
+    padding: 20px;
+  }
+  .connected_users .user {
+    height: 60px;
+    width: 60px;
+    font-size: 36px;
+    margin-right: 20px;
+  }
+}
+@media screen and (max-device-width: 500px) {
+  .me {
+    width: 300px;
+    height: 100px;
+  }
+  .me .avatar {
+    height: 60px;
+    width: 60px;
+    min-width: 60px;
+    font-size: 30px;
+  }
+  .me .avatar::after {
+    height: 16px;
+    width: 16px;
+  }
+  .me .avatar::before {
+    height: 20px;
+    width: 20px;
+    bottom: -6;
+    right: -6;
+  }
+  .me .text {
+    height: 60px;
+  }
+  .me .text .status {
+    top: -10px;
+  }
+  .me .settings_icon {
+    height: 30px;
+    width: 30px;
+  }
+
+  .connected_users {
+    padding-left: 320px;
+  }
+
+  .channels_container {
+    height: 120px;
+  }
+
+  .channels {
+    padding: 10px;
+  }
+  .channels .channel {
+    height: 100px;
+    margin-right: 20px;
+    font-size: 20px;
   }
 }
 
