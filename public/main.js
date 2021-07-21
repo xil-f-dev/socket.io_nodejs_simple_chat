@@ -33,7 +33,6 @@ const login = (username) => {
 socket.on("logged", (data) => {
 	popup.classList.add("hidden");
 	me = data.users.find((user) => user.id == socket.id);
-	console.log(me);
 	addMe(me);
 	updateUsers(data.users);
 	updateRooms(data.rooms);
@@ -41,6 +40,8 @@ socket.on("logged", (data) => {
 	message_input.focus();
 });
 socket.on("userlist update", (data) => {
+	me = data.users.find((user) => user.id == socket.id);
+	console.log(me);
 	updateUsers(data.users);
 });
 const updateUsers = (userlist) => {
@@ -122,10 +123,14 @@ const addRoom = (room) => {
 	}
 };
 const channelClicked = (e) => {
+	const clickedChannel = e.currentTarget;
+	if (!me.rooms.includes(clickedChannel.dataset.channelid)) {
+		socket.emit("sub channel", clickedChannel.dataset.channelid);
+	}
+	// Styles
 	document.querySelectorAll(".channel").forEach((channel) => {
 		channel.classList.remove("active");
 	});
-	const clickedChannel = e.currentTarget;
 	clickedChannel.classList.add("active");
 	clickedChannel.classList.remove("notified");
 	updateTabs(clickedChannel.dataset.channelid);

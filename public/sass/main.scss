@@ -98,6 +98,7 @@ body {
 
 // Channels manager + me section
 .channels_container {
+	background-color: $bg_channels;
 	width: 15%;
 	min-width: 200px;
 	height: 100%;
@@ -105,11 +106,22 @@ body {
 	flex-direction: column;
 	align-items: stretch;
 	justify-content: stretch;
+	.channel_add_container {
+		flex: 1;
+		padding: 10px 20px 20px;
+		& .channel_add {
+			text-align: center;
+			font-size: 22px;
+			padding: 2px 10px;
+			background-color: rgba($color: #fff, $alpha: 0.1);
+			color: white;
+			border-radius: 10px;
+		}
+	}
 }
 .channels {
-	background-color: $bg_channels;
-	padding: 20px;
-	height: 100%;
+	padding: 20px 20px 0;
+	overflow-y: auto;
 	& .channel {
 		background-color: rgba($color: #fff, $alpha: 0.1);
 		color: white;
@@ -391,15 +403,28 @@ main form {
 		height: 60px;
 		width: 100%;
 		min-width: 0;
-		flex-direction: row;
+		flex-direction: row-reverse;
 		align-items: stretch;
 		justify-content: flex-start;
+		& .channel_add_container {
+			padding: 5px;
+			flex: 0;
+			& .channel_add {
+				height: 100%;
+				width: 50px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+		}
 	}
+
 	.channels {
 		flex: 1;
 		display: flex;
 		padding: 5px;
-		overflow-x: hidden;
+		overflow-y: hidden;
+		overflow-x: auto;
 		& .channel {
 			height: 50px;
 			margin-bottom: 0;
@@ -408,6 +433,7 @@ main form {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			white-space: nowrap;
 			&.active {
 				border-left: 0;
 				background-color: rgba($color: white, $alpha: 0.3);

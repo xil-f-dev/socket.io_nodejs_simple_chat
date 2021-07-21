@@ -8,6 +8,7 @@
 			content="width=device-width, initial-scale=1, user-scalable=no"
 		/>
 		<link rel="stylesheet" href="main.css" />
+		<link rel="stylesheet" href="modal.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -35,6 +36,9 @@
 		<!-- Channels -->
 		<div class="channels_container ns">
 			<nav class="channels"></nav>
+			<div class="channel_add_container">
+				<div class="channel_add"><span class="name">+</span></div>
+			</div>
 			<div class="me"></div>
 		</div>
 
@@ -68,6 +72,7 @@
 
 		<!-- Scripts -->
 		<script src="/socket.io/socket.io.js"></script>
+		<script src="/modal.js"></script>
 		<script src="/main.js"></script>
 	</body>
 </html>

@@ -1,0 +1,23 @@
+{
+    "rooms": [
+        {
+            "id": "ch1",
+            "name": "General",
+            "level": 0,
+            "default": true
+        },
+        {
+            "id": "ch2",
+            "name": "Other Room",
+            "level": 0,
+            "default": false
+        },
+        {
+            "id": "ch3",
+            "name": "Room 3",
+            "level": 2,
+            "default": false
+        }
+    ],
+    "users": []
+}

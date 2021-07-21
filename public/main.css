@@ -83,6 +83,7 @@ body {
 }
 
 .channels_container {
+  background-color: #50535a;
   width: 15%;
   min-width: 200px;
   height: 100%;
@@ -91,11 +92,22 @@ body {
   align-items: stretch;
   justify-content: stretch;
 }
+.channels_container .channel_add_container {
+  flex: 1;
+  padding: 10px 20px 20px;
+}
+.channels_container .channel_add_container .channel_add {
+  text-align: center;
+  font-size: 22px;
+  padding: 2px 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 10px;
+}
 
 .channels {
-  background-color: #50535a;
-  padding: 20px;
-  height: 100%;
+  padding: 20px 20px 0;
+  overflow-y: auto;
 }
 .channels .channel {
   background-color: rgba(255, 255, 255, 0.1);
@@ -384,16 +396,28 @@ main form .message_submit {
     height: 60px;
     width: 100%;
     min-width: 0;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: stretch;
     justify-content: flex-start;
+  }
+  .channels_container .channel_add_container {
+    padding: 5px;
+    flex: 0;
+  }
+  .channels_container .channel_add_container .channel_add {
+    height: 100%;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .channels {
     flex: 1;
     display: flex;
     padding: 5px;
-    overflow-x: hidden;
+    overflow-y: hidden;
+    overflow-x: auto;
   }
   .channels .channel {
     height: 50px;
@@ -403,6 +427,7 @@ main form .message_submit {
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
   }
   .channels .channel.active {
     border-left: 0;
