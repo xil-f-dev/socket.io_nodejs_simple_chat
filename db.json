@@ -17,6 +17,12 @@
             "name": "Room 3",
             "level": 2,
             "default": false
+        },
+        {
+            "id": "c_0d346c82d8d7f9e8",
+            "name": "My new channel",
+            "level": 0,
+            "default": false
         }
     ],
     "users": []

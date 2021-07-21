@@ -1,0 +1,136 @@
+.modal_bg_curtain {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba($color: #000000, $alpha: 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+.modal_popup {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	background-color: #36393f;
+	border-radius: 15px;
+	padding: 20px;
+	color: white;
+}
+.modal_title {
+	font-size: 30px;
+	font-weight: 600;
+	margin: 0 50px;
+}
+.modal_text {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	margin: 20px 0;
+	& input {
+		flex-grow: 1;
+		background-color: #303339;
+		color: #9096a0;
+		font-size: 15px;
+		padding: 10px 20px;
+		border-radius: 10px;
+		min-width: 0;
+		border: 2px solid transparent;
+		transition: 0.2s border-color ease;
+		&:focus {
+			border-color: #5865f2;
+		}
+		&.error {
+			border-color: rgb(163, 12, 12);
+			background-color: #352b2a;
+		}
+	}
+	& > div {
+		display: flex;
+		flex-wrap: nowrap;
+		width: 100%;
+		min-width: 0;
+	}
+	& > div > input {
+		&:not(:first-child) {
+			border-left: 1px solid #36393f;
+		}
+		&:not(:last-child) {
+			border-right: 1px solid #36393f;
+		}
+		&:first-child {
+			border-radius: 10px 0 0 10px;
+		}
+		&:last-child {
+			border-radius: 0 10px 10px 0;
+		}
+	}
+}
+
+.popup_form {
+	display: flex;
+	justify-content: flex-end;
+	& button {
+		padding: 10px 20px;
+		border-radius: 10px;
+		background-color: white;
+		color: #303339;
+		font-size: 15px;
+		&.accept_button {
+			background-color: #5865f2;
+			color: white;
+		}
+		&.popup_close {
+			margin-right: 10px;
+			color: white;
+			background-color: rgb(228, 72, 72);
+		}
+	}
+}
+
+@media screen and (max-device-width: 500px), screen and (max-width: 500px) {
+	.modal_popup {
+		width: 90%;
+		border-radius: 15px;
+		padding: 30px 5vw 5vw;
+		align-items: center;
+		align-items: stretch;
+		& .modal_title {
+			font-size: 10vw;
+			text-align: center;
+			margin: 0;
+		}
+		& .popup_form {
+			width: 100%;
+			flex-direction: column-reverse;
+			align-items: stretch;
+			& .popup_close {
+				margin: 5px 0 0 0;
+			}
+		}
+	}
+}
+@media screen and (max-device-width: 500px), screen and (max-width: 500px) {
+	.modal_text {
+		& > div {
+			flex-direction: column;
+		}
+		& > div > input {
+			margin-right: 0;
+			margin-left: 0;
+
+			&:first-child {
+				border-radius: 10px;
+			}
+			&:last-child {
+				border-radius: 10px;
+			}
+			&:not(:first-child) {
+				margin-top: 5px;
+			}
+		}
+	}
+}

@@ -2,6 +2,9 @@
 const config = require("./config.json");
 const debug = config.debug;
 
+// UUID (channels id)
+const { uid } = require("uid");
+
 // Store
 const db = require("./store");
 
@@ -75,14 +78,29 @@ io.on("connection", (socket) => {
 
 	socket.on("sub channel", (channelid) => {
 		let roomid = rooms.find((room) => room.id == channelid).id;
-		if (users.find((user) => user.id == socket.id).level < roomid) return;
+		if (users.find((user) => user.id == socket.id).level < rooms.find((room) => room.id == channelid).level) return;
 
 		socket.join(roomid);
 		users.find((user) => user.id == socket.id).rooms.push(roomid);
-		console.log(users);
 		io.emit("userlist update", {
 			users: users,
 		});
+	});
+	socket.on("channel add", (channel_conf) => {
+		if (channel_conf.name.trim().length < 4 || channel_conf.name.trim().length > 20) return;
+		if (!(0 <= parseInt(channel_conf.level) <= 5)) return;
+		db.push(
+			"/rooms[]",
+			{
+				id: `c_${uid(16)}`,
+				name: channel_conf.name.trim(),
+				level: parseInt(channel_conf.level),
+				default: false,
+			},
+			true
+		);
+		rooms = db.getData("/rooms");
+		io.emit("roomlist update", rooms);
 	});
 
 	// when the user disconnects.. perform this
