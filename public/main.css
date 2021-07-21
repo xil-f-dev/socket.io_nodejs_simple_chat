@@ -43,7 +43,6 @@ body {
 }
 
 .login .popup {
-  height: 300px;
   width: 500px;
   background-color: #d1d1d1;
   padding: 30px 50px 50px;
@@ -347,6 +346,18 @@ main form .message_submit {
 @media screen and (max-device-width: 500px), screen and (max-width: 500px) {
   body {
     flex-direction: column-reverse;
+  }
+
+  .login .popup {
+    width: 100%;
+    border-radius: 2px;
+    padding: 30px 10px 30px;
+  }
+  .login .popup h3 {
+    font-size: 15vw;
+  }
+  .login .popup form {
+    margin: 0 10vw;
   }
 
   section.right {
