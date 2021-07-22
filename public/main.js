@@ -42,7 +42,7 @@ socket.on("logged", (data) => {
 });
 socket.on("userlist update", (data) => {
 	me = data.users.find((user) => user.id == socket.id);
-	console.log(me);
+	console.log("Me", me);
 	updateUsers(data.users);
 });
 const updateUsers = (userlist) => {
@@ -97,28 +97,41 @@ const notify = (channelid) => {
 socket.on("roomlist update", (rooms) => updateRooms(rooms));
 const updateRooms = (rooms) => {
 	channels.innerHTML = "";
-	messages_container.innerHTML = "";
+	let same_tabs = "";
+	let new_tabs = "";
 	rooms.forEach((room) => {
-		addRoom(room);
+		let res = addRoom(room);
+		if (res.status == 1) {
+			same_tabs += res.html;
+		} else if (res.status == 2) {
+			new_tabs += res.html;
+		}
+		console.log("For room " + room.id, "New tabs: " + new_tabs, "Same tabs: " + same_tabs);
 	});
+	messages_container.innerHTML = new_tabs + same_tabs;
 	document.querySelectorAll(".channel:not(.locked)").forEach((channel) => {
 		channel.addEventListener("click", channelClicked);
 	});
+	document.querySelector(`.channel[data-channelid="${rooms[0].id}"]`).click();
 };
 const addRoom = (room) => {
 	channels.innerHTML += `<div class="channel${room.level > me.level ? " locked" : ""}" data-channelid="${
 		room.id
 	}"><span class="name">${room.name}</span></div>`;
-	console.log(room.id, room.level, me.level);
-	if (!room.level > me.level) {
-		console.log(room.id);
-		messages_container.innerHTML += `
-		<div
-		data-channelid="${room.id}"
-		class="tab"
-		></div>
-		`;
-	}
+
+	if (room.level > me.level) return { status: 0 };
+	console.log(room.id, document.querySelector(`div.tab[data-channelid=${room.id}]`));
+	if (document.querySelector(`div.tab[data-channelid=${room.id}]`) !== null)
+		return { status: 1, html: document.querySelector(`div.tab[data-channelid=${room.id}]`).outerHTML };
+	return {
+		status: 2,
+		html: `
+			<div
+			data-channelid="${room.id}"
+			class="tab"
+			></div>
+		`,
+	};
 };
 const channelClicked = (e) => {
 	const clickedChannel = e.currentTarget;
@@ -139,6 +152,7 @@ const updateTabs = (tabId) => {
 		tab.classList.remove("tab_active");
 	});
 	document.querySelector(`.tab[data-channelid = ${tabId}]`).classList.add("tab_active");
+	document.querySelector(`input.message_input`).focus();
 };
 const createChannel = async () => {
 	const channel_conf = await Modal({

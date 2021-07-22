@@ -1,7 +1,6 @@
 const Modal = (config) => {
 	return new Promise((resolve, reject) => {
 		let modal_id = "p_" + generateId(20);
-		console.log("Popup", modal_id);
 		const raw_html = `
 				<div class="modal_bg_curtain" id="${modal_id}">
 					<div class="modal_popup">
@@ -25,7 +24,6 @@ const Modal = (config) => {
 				let response = {};
 				let error = false;
 				document.querySelectorAll(`#${modal_id} .modal_text input`).forEach((i) => {
-					console.log(i.value.trim().length);
 					if (i.type == "text" && (i.value.trim().length < 4 || i.value.trim().length > 20)) {
 						i.classList.add("error");
 						error = true;

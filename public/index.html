@@ -3,10 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Socket.IO Chat Example</title>
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, user-scalable=no"
-		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="main.css" />
 		<link rel="stylesheet" href="modal.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,11 +20,7 @@
 				<h3>Welcome !</h3>
 				<p>Please login to use the chat</p>
 				<form>
-					<input
-						type="text"
-						placeholder="Your username here ..."
-						class="user_input"
-					/>
+					<input type="text" placeholder="Your username here ..." class="user_input" />
 					<input type="submit" value="Continue" class="user_submit" />
 				</form>
 			</div>
@@ -45,25 +38,10 @@
 		<!-- Chat ( tabs ) -->
 		<section class="right">
 			<main>
-				<div class="messages_container">
-					<div
-						data-channelid="ch1"
-						class="tab"
-						style="background-color: #36393f"
-					></div>
-					<div
-						data-channelid="ch2"
-						class="tab"
-						style="background-color: #36393f"
-					></div>
-				</div>
+				<div class="messages_container"></div>
 				<form class="message_form">
 					<input type="text" class="message_input" autofocus />
-					<input
-						type="submit"
-						value="Envoyer"
-						class="message_submit"
-					/>
+					<input type="submit" value="Envoyer" class="message_submit" />
 				</form>
 			</main>
 			<!-- Connected users -->

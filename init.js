@@ -36,10 +36,5 @@
 		}"\n    }\n}`;
 	e.writeFileSync("./config.json", n);
 	const o = require("./store");
-	o.push("/rooms", [
-		{ id: "ch1", name: "General", level: 0, default: !0 },
-		{ id: "ch2", name: "Other Room", level: 0, default: !1 },
-		{ id: "ch3", name: "Room 3", level: 2, default: !1 },
-	]),
-		o.push("/users", []);
+	o.push("/rooms", [{ id: "general", name: "General", level: 0, default: !0 }]), o.push("/users", []);
 })();
