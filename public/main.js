@@ -32,17 +32,18 @@ const login = (username) => {
 	socket.emit("login", username);
 };
 socket.on("logged", (data) => {
+	console.log(data);
 	popup.classList.add("hidden");
 	me = data.users.find((user) => user.id == socket.id);
 	addMe(me);
 	updateUsers(data.users);
 	updateRooms(data.rooms);
 	updateTabs(data.rooms.find((room) => room.default).id);
+	updateMessages(data.messages);
 	message_input.focus();
 });
 socket.on("userlist update", (data) => {
 	me = data.users.find((user) => user.id == socket.id);
-	console.log("Me", me);
 	updateUsers(data.users);
 });
 const updateUsers = (userlist) => {
@@ -75,9 +76,14 @@ socket.on("message", (message) => {
 	}
 });
 
+const updateMessages = (messages) => {
+	messages.forEach((msg) => {
+		addMessage(msg);
+	});
+};
 const addMessage = (message) => {
 	document.querySelector(`.tab[data-channelid=${message.channel}]`).innerHTML += `
-		<div class="message">
+		<div class="message" data-messageid="${message.id}">
 			<div class="avatar ns" title="${message.author}">
 				<span class="username">${message.author.substring(0, 1)}</span>
 			</div>
@@ -106,7 +112,6 @@ const updateRooms = (rooms) => {
 		} else if (res.status == 2) {
 			new_tabs += res.html;
 		}
-		console.log("For room " + room.id, "New tabs: " + new_tabs, "Same tabs: " + same_tabs);
 	});
 	messages_container.innerHTML = new_tabs + same_tabs;
 	document.querySelectorAll(".channel:not(.locked)").forEach((channel) => {
@@ -120,7 +125,6 @@ const addRoom = (room) => {
 	}"><span class="name">${room.name}</span></div>`;
 
 	if (room.level > me.level) return { status: 0 };
-	console.log(room.id, document.querySelector(`div.tab[data-channelid=${room.id}]`));
 	if (document.querySelector(`div.tab[data-channelid=${room.id}]`) !== null)
 		return { status: 1, html: document.querySelector(`div.tab[data-channelid=${room.id}]`).outerHTML };
 	return {
@@ -157,7 +161,7 @@ const updateTabs = (tabId) => {
 const createChannel = async () => {
 	const channel_conf = await Modal({
 		title: "Create a channel",
-		content: `<div><input name="ch_name" type="text" placeholder="Input here ..."/><input name="level" type="number" placeholder="0" value="0" min="0" max="5" /></div>`,
+		content: `<div><input name="ch_name" type="text" placeholder="Input here ..."/><input name="level" type="number" placeholder="0" value="0" min="0" max="5" disabled/></div>`,
 		closeButton: true,
 	});
 	socket.emit("channel add", {

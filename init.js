@@ -36,5 +36,5 @@
 		}"\n    }\n}`;
 	e.writeFileSync("./config.json", n);
 	const o = require("./store");
-	o.push("/rooms", [{ id: "general", name: "General", level: 0, default: !0 }]), o.push("/users", []);
+	o.push("/rooms", [{ id: "general", name: "General", level: 0, default: !0 }]), o.push("/messages", []);
 })();

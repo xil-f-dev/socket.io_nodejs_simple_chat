@@ -56,6 +56,7 @@ io.on("connection", (socket) => {
 		socket.emit("logged", {
 			users: users,
 			rooms: rooms,
+			messages: db.getData("/messages"),
 		});
 		// echo globally (all clients) that a person has connected
 		socket.broadcast.emit("userlist update", {
@@ -69,12 +70,21 @@ io.on("connection", (socket) => {
 		if (debug) console.log("New  message : ", data);
 		if (rooms.findIndex((room) => room.id == data.channel) == -1) return;
 		// we tell the client to execute 'new message'
-		io.to(data.channel).emit("message", {
-			author: users.find((item) => item.id == socket.id).username,
+		const message = {
+			id: `m_${uid(16)}`,
+			author: users.find((user) => user.id == socket.id).username,
 			content: data.content,
 			channel: data.channel,
-		});
+		};
+		saveMessage(message);
+		io.to(data.channel).emit("message", message);
 	});
+	const saveMessage = (message) => {
+		if (db.count("/messages") >= 100) {
+			db.delete("/messages[0]");
+		}
+		db.push("/messages[]", message);
+	};
 
 	socket.on("sub channel", (channelid) => {
 		let roomid = rooms.find((room) => room.id == channelid).id;
