@@ -1,4 +1,4 @@
 node_modules/
+dev.sh
 data_store.json
 config.json
-dev.sh
