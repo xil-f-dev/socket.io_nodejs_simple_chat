@@ -77,6 +77,19 @@ socket.on("message", (message) => {
 		notify(message.channel);
 	}
 });
+socket.on("service message", (message) => {
+	document.querySelector(`.tab[data-channelid=${activeTab}]`).innerHTML += `
+		<div class="message service">
+			<div class="avatar ns">
+				<span class="username">${message.author.substring(0, 1)}</span></div>
+			<div class="content">
+				<span class="author">${message.author}</span>
+				<p class="text">
+				${message.content}
+				</p>
+			</div>
+		</div>`;
+});
 
 const updateMessages = (messages) => {
 	messages.forEach((msg) => {

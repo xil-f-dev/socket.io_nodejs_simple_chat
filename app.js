@@ -99,11 +99,20 @@ io.on("connection", (socket) => {
 			io.emit("userlist update", {
 				users: users,
 			});
+			socket.emit("service message", {
+				author: "Service message",
+				content: `Presence updated ! Now it's <span class="service_highlited">${args[0]}</span>`,
+			});
 		} else if (command == "status" && args.join(" ").length <= config.statusMaxLength) {
-			users.find((user) => user.id == socket.id).status = args.join(" ");
+			let new_status = args.join(" ");
+			users.find((user) => user.id == socket.id).status = new_status;
 			console.log(users);
 			io.emit("userlist update", {
 				users: users,
+			});
+			socket.emit("service message", {
+				author: "Service message",
+				content: `Status updated at <span class="service_highlited">${new_status}</span>`,
 			});
 		}
 	};

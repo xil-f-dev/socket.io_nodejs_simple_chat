@@ -267,6 +267,7 @@ main .tab .message .avatar {
 main .tab .message .content {
   color: #cecece;
   margin-left: 15px;
+  flex-grow: 1;
 }
 main .tab .message .content .author {
   font-weight: 600;
@@ -276,6 +277,34 @@ main .tab .message .content .text {
 }
 main .tab .message:hover {
   background-color: #3f4146;
+}
+main .tab .message.service {
+  background-color: #3f3b36;
+  border-radius: 35px;
+  padding: 10px;
+}
+main .tab .message.service .avatar {
+  height: 30px;
+  width: 30px;
+  min-width: 30px;
+  font-size: 20px;
+  background-image: linear-gradient(130deg, #ff9100, #e75d0d);
+}
+main .tab .message.service .content {
+  display: flex;
+  align-items: center;
+}
+main .tab .message.service .content .author {
+  color: #ebc04b;
+}
+main .tab .message.service .content .text {
+  margin: 0 0 0 10px;
+  flex: 1;
+  text-align: center;
+}
+main .tab .message.service .content .text .service_highlited {
+  color: #d17c7c;
+  font-weight: 600;
 }
 
 main form {
