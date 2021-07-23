@@ -13,6 +13,7 @@ body {
   flex-direction: row;
   height: 100vh;
   max-height: -webkit-fill-available;
+  overflow: hidden;
 }
 
 .ns {
@@ -177,13 +178,13 @@ body {
   right: 2px;
   background-color: #2ab62a;
 }
-.me .avatar::after[data-status=offline] {
+.me .avatar[data-presence=offline]::after {
   background-color: #777777;
 }
-.me .avatar::after[data-status=dnd] {
+.me .avatar[data-presence=dnd]::after {
   background-color: #b80606;
 }
-.me .avatar::after[data-status=idle] {
+.me .avatar[data-presence=idle]::after {
   background-color: #fded04;
 }
 
@@ -191,6 +192,9 @@ body {
   height: 40px;
   width: 100%;
   margin-left: 10px;
+  margin-right: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
   color: white;
 }
 .me .text .username {
@@ -316,6 +320,75 @@ main form .message_submit {
   font-weight: 800;
   font-size: 30px;
   margin-bottom: 10px;
+  position: relative;
+}
+.connected_users .user .status-tooltip {
+  opacity: 0;
+  max-width: 0;
+  padding: 5px 0;
+  transition: max-width 0.05s ease, opacity 0.1s ease, padding 0.1s ease;
+  position: absolute;
+  font-size: 14px;
+  font-weight: 400;
+  background-color: white;
+  color: #2f3136;
+  right: calc(100% + 15px);
+  white-space: nowrap;
+  border-radius: 5px;
+}
+.connected_users .user .status-tooltip .tooltip-username {
+  font-weight: 500;
+  color: #1f2024;
+}
+.connected_users .user .status-tooltip::after {
+  content: "";
+  opacity: 0;
+  transition: all 0.1s ease;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 7px;
+  border-color: transparent transparent transparent white;
+  right: -7px;
+  top: calc(50% - 5px);
+}
+.connected_users .user:hover .status-tooltip {
+  max-width: 200px;
+  opacity: 1;
+  padding: 5px 10px;
+}
+.connected_users .user:hover .status-tooltip::after {
+  opacity: 1;
+}
+.connected_users .user::before {
+  content: "";
+  height: 18px;
+  width: 18px;
+  border-radius: 50px;
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  background-color: #2f3136;
+}
+.connected_users .user::after {
+  content: "";
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background-color: #2ab62a;
+}
+.connected_users .user[data-presence=offline]::after {
+  background-color: #777777;
+}
+.connected_users .user[data-presence=dnd]::after {
+  background-color: #b80606;
+}
+.connected_users .user[data-presence=idle]::after {
+  background-color: #fded04;
 }
 
 @media screen and (max-device-width: 650px), screen and (max-width: 650px) {
@@ -341,6 +414,16 @@ main form .message_submit {
     font-size: 18px;
     margin-bottom: 0;
     margin-right: 10px;
+  }
+  .connected_users .user::after {
+    height: 8px;
+    width: 8px;
+  }
+  .connected_users .user::before {
+    height: 12px;
+    width: 12px;
+    bottom: 0;
+    right: 0;
   }
 }
 @media screen and (max-device-width: 500px), screen and (max-width: 500px) {
@@ -401,6 +484,9 @@ main form .message_submit {
 
   .connected_users {
     padding-left: 160px;
+  }
+  .connected_users .user .status-tooltip {
+    display: none;
   }
 
   .channels_container {

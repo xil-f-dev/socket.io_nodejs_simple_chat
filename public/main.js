@@ -45,14 +45,16 @@ socket.on("logged", (data) => {
 socket.on("userlist update", (data) => {
 	me = data.users.find((user) => user.id == socket.id);
 	updateUsers(data.users);
+	addMe(me);
 });
 const updateUsers = (userlist) => {
 	connected_users.innerHTML = "";
 
 	userlist.forEach((user) => {
 		connected_users.innerHTML += `
-		<div class="user" title="${user.username}">
-		<span class="username">${user.username.substring(0, 1)}</span>
+		<div class="user" data-presence="${user.presence}">
+			<span class="username">${user.username.substring(0, 1)}</span>
+			<div class="status-tooltip"><span class="tooltip-username">${user.username}</span><br>${user.status}</div>
 		</div>
 		`;
 	});
@@ -173,8 +175,9 @@ channel_add.addEventListener("click", createChannel);
 
 // Me
 const addMe = (me) => {
+	console.log(me);
 	me_section.innerHTML = `
-		<div class="avatar" title="${me.username}" data-status="${me.status_code}">
+		<div class="avatar" title="${me.username}" data-presence="${me.presence}">
 			<span class="letter">${me.username.substring(0, 1)}</span>
 		</div>
 		<div class="text">

@@ -21,7 +21,7 @@ const port = process.env.PORT || config.server.port;
 colors.setTheme(config.colors);
 
 server.listen(port, () => {
-	if (debug) console.log(`Server listening at port ${port}`.debug);
+	console.log(`Server listening at port ${port}`.debug);
 });
 
 // Routing
@@ -45,13 +45,13 @@ io.on("connection", (socket) => {
 		const user = {
 			id: socket.id,
 			username: username,
-			status: "online",
-			status_code: "online", // online || idle || offline || dnd
+			status: "I'm here !",
+			presence: "online", // online || idle || offline || dnd
 			level: 0,
 			rooms: [rooms[0].id],
 		};
 		users.push(user);
-		console.log(users);
+		if (debug) console.log("List of connected users : ".green, users);
 		addedUser = true;
 		socket.emit("logged", {
 			users: users,
@@ -69,6 +69,7 @@ io.on("connection", (socket) => {
 		if (data.content.trim().length <= 0) return;
 		if (debug) console.log("New  message : ", data);
 		if (rooms.findIndex((room) => room.id == data.channel) == -1) return;
+		if (data.content.trim().startsWith(config.commandPrefix)) return commandHandler(data.content);
 		// we tell the client to execute 'new message'
 		const message = {
 			id: `m_${uid(16)}`,
@@ -84,6 +85,27 @@ io.on("connection", (socket) => {
 			db.delete("/messages[0]");
 		}
 		db.push("/messages[]", message);
+	};
+	const commandHandler = (message) => {
+		let args = message.trim().substring(config.commandPrefix.length).split(" ");
+		let command = args.splice(0, 1);
+		console.log(command, args);
+		return execCmd(command, args);
+	};
+	const execCmd = (command, args) => {
+		if (command == "presence" && ["idle", "offline", "dnd", "online"].includes(args[0])) {
+			users.find((user) => user.id == socket.id).presence = args[0];
+			console.log(users);
+			io.emit("userlist update", {
+				users: users,
+			});
+		} else if (command == "status" && args.join(" ").length <= config.statusMaxLength) {
+			users.find((user) => user.id == socket.id).status = args.join(" ");
+			console.log(users);
+			io.emit("userlist update", {
+				users: users,
+			});
+		}
 	};
 
 	socket.on("sub channel", (channelid) => {

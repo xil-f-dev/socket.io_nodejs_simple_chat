@@ -6,12 +6,13 @@ $bg_me_section: #292b2f;
 $notified_color: rgb(214, 3, 3);
 $bg_message_hover: #3f4146;
 $messages_color: rgb(206, 206, 206);
+$bg_users_connected: #2f3136;
 
 // Status
-$status_online: rgb(42, 182, 42);
-$status_idle: rgb(253, 237, 4);
-$status_offline: rgb(119, 119, 119);
-$status_dnd: rgb(184, 6, 6);
+$presence_online: rgb(42, 182, 42);
+$presence_idle: rgb(253, 237, 4);
+$presence_offline: rgb(119, 119, 119);
+$presence_dnd: rgb(184, 6, 6);
 
 // Styles
 * {
@@ -28,6 +29,7 @@ body {
 	flex-direction: row;
 	height: 100vh;
 	max-height: -webkit-fill-available;
+	overflow: hidden;
 }
 
 // Non-selexionnables elements
@@ -186,16 +188,21 @@ body {
 		position: absolute;
 		bottom: 2px;
 		right: 2px;
-		background-color: $status_online;
-
-		&[data-status="offline"] {
-			background-color: $status_offline;
+		background-color: $presence_online;
+	}
+	&[data-presence="offline"] {
+		&::after {
+			background-color: $presence_offline;
 		}
-		&[data-status="dnd"] {
-			background-color: $status_dnd;
+	}
+	&[data-presence="dnd"] {
+		&::after {
+			background-color: $presence_dnd;
 		}
-		&[data-status="idle"] {
-			background-color: $status_idle;
+	}
+	&[data-presence="idle"] {
+		&::after {
+			background-color: $presence_idle;
 		}
 	}
 }
@@ -203,6 +210,9 @@ body {
 	height: 40px;
 	width: 100%;
 	margin-left: 10px;
+	margin-right: 10px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 	color: white;
 	& .username {
 		font-size: 15px;
@@ -311,7 +321,7 @@ main form {
 	width: 100px;
 	min-width: 100px;
 	height: 100%;
-	background-color: #2f3136;
+	background-color: $bg_users_connected;
 	padding: 25px;
 
 	& .user {
@@ -326,6 +336,83 @@ main form {
 		font-weight: 800;
 		font-size: 30px;
 		margin-bottom: 10px;
+		position: relative;
+
+		& .status-tooltip {
+			opacity: 0;
+			max-width: 0;
+			padding: 5px 0;
+			transition: max-width 0.05s ease, opacity 0.1s ease, padding 0.1s ease;
+			position: absolute;
+			// width: 100px;
+			font-size: 14px;
+			font-weight: 400;
+			background-color: white;
+			color: $bg_users_connected;
+			right: calc(100% + 15px);
+			white-space: nowrap;
+			border-radius: 5px;
+			& .tooltip-username {
+				font-weight: 500;
+				color: #1f2024;
+			}
+			&::after {
+				content: "";
+				opacity: 0;
+				transition: all 0.1s ease;
+				position: absolute;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 5px 0 5px 7px;
+				border-color: transparent transparent transparent white;
+				right: -7px;
+				top: calc(50% - 5px);
+			}
+		}
+		&:hover .status-tooltip {
+			max-width: 200px;
+			opacity: 1;
+			padding: 5px 10px;
+			&::after {
+				opacity: 1;
+			}
+		}
+		&::before {
+			content: "";
+			height: 18px;
+			width: 18px;
+			border-radius: 50px;
+			position: absolute;
+			bottom: -1px;
+			right: -1px;
+			background-color: $bg_users_connected;
+		}
+		&::after {
+			content: "";
+			height: 12px;
+			width: 12px;
+			border-radius: 50px;
+			position: absolute;
+			bottom: 2px;
+			right: 2px;
+			background-color: $presence_online;
+		}
+		&[data-presence="offline"] {
+			&::after {
+				background-color: $presence_offline;
+			}
+		}
+		&[data-presence="dnd"] {
+			&::after {
+				background-color: $presence_dnd;
+			}
+		}
+		&[data-presence="idle"] {
+			&::after {
+				background-color: $presence_idle;
+			}
+		}
 	}
 }
 
@@ -351,6 +438,16 @@ main form {
 			font-size: 18px;
 			margin-bottom: 0;
 			margin-right: 10px;
+			&::after {
+				height: 8px;
+				width: 8px;
+			}
+			&::before {
+				height: 12px;
+				width: 12px;
+				bottom: 0;
+				right: 0;
+			}
 		}
 	}
 }
@@ -408,6 +505,9 @@ main form {
 	}
 	.connected_users {
 		padding-left: 160px;
+		& .user .status-tooltip {
+			display: none;
+		}
 	}
 	.channels_container {
 		height: 60px;
