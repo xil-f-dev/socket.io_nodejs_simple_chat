@@ -6,7 +6,7 @@ const debug = config.debug;
 const { uid } = require("uid");
 
 // Store
-const db = require("./store");
+const db = require("./database/store");
 
 // Setup basic express server
 const colors = require("colors");
